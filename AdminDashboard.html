@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f0fe;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Header styles */
+        h2 {
+            margin-bottom: 25px;
+            color: #2a75e8;
+            font-weight: 600;
+        }
+
+        /* Button styles */
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #e9edf2;
+            color: #2a75e8;
+        }
+
+        button:hover {
+            background-color: #cdd6de;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            background-color: #b0c2cc;
+        }
+
+        /* Primary button styles */
+        button.primary {
+            background-color: #2a75e8;
+            color: white;
+        }
+
+        button.primary:hover {
+            background-color: #205db4;
+        }
+
+        button.primary:active {
+            background-color: #1c4c93;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Admin Dashboard</h2>
+        <button  onclick="underwriterRegistration()">Underwriter Registration</button>
+        <button onclick="searchUnderwriter()">Search Underwriter by ID</button>
+        <button onclick="updateUnderwriterPassword()">Update Underwriter Password</button>
+        <button onclick="deleteUnderwriter()">Delete Underwriter by ID</button>
+    </div>
+
+    <script>
+        function underwriterRegistration() {
+            // Perform action for Underwriter Registration
+            window.location.href = "UnderwriterRegistration.html";
+        }
+
+        function searchUnderwriter() {
+            // Perform action for Search Underwriter by ID
+            window.location.href = "UnderwriterSearchById.html";
+        }
+
+        function updateUnderwriterPassword() {
+            // Perform action for Update Underwriter Password
+            window.location.href = "UnderwriterUpdatePassword.html";
+        }
+
+        function deleteUnderwriter() {
+            // Perform action for Delete Underwriter by ID
+            window.location.href = "UnderwriterDelete.html";
+        }
+    </script>
+</body>
+
+</html>
+
+

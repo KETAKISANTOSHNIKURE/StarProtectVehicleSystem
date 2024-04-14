@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Underwriter Registration</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* Header styles */
+        h2 {
+            margin-bottom: 25px;
+            color: #2a75e8;
+            font-weight: 600;
+        }
+
+        /* Label styles */
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        /* Input styles */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #2a75e8;
+        }
+
+        /* Button styles */
+        button {
+            width: 48%;
+            padding: 10px 20px;
+            margin-right: 4%;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #e9edf2;
+            color: #2a75e8;
+        }
+
+        button:last-child {
+            margin-right: 0;
+        }
+
+        button:hover {
+            background-color: #cdd6de;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            background-color: #b0c2cc;
+        }
+
+        /* Primary button styles */
+        button.primary {
+            background-color: #2a75e8;
+            color: white;
+        }
+
+        button.primary:hover {
+            background-color: #205db4;
+        }
+
+        button.primary:active {
+            background-color: #1c4c93;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Underwriter Registration</h2>
+        <form id="registrationForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" required>
+
+            <label for="joiningDate">Joining Date:</label>
+            <input type="date" id="joiningDate" required>
+
+            <label for="defaultPassword">Default Password:</label>
+            <input type="text" id="defaultPassword" required>
+
+            <div class="button-group">
+                <button type="submit" class="primary">Register</button>
+                <button type="button" onclick="goBack()">Back</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Check if underwriters array exists in local storage, if not, initialize it to an empty array
+        let underwriters = JSON.parse(localStorage.getItem('underwriters')) || [];
+
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Get form values
+            let name = document.getElementById("name").value;
+            let dob = document.getElementById("dob").value;
+            let joiningDate = document.getElementById("joiningDate").value;
+            let defaultPassword = document.getElementById("defaultPassword").value;
+
+            // Generate unique underwriterId
+            let underwriterId = generateUnderwriterId();
+
+            // Create new underwriter object
+            let newUnderwriter = {
+                underwriterId: underwriterId,
+                name: name,
+                dob: dob,
+                joiningDate: joiningDate,
+                defaultPassword: defaultPassword
+            };
+
+            // Push new underwriter object to the array
+            underwriters.push(newUnderwriter);
+
+            // Save updated array to local storage
+            localStorage.setItem('underwriters', JSON.stringify(underwriters));
+
+            // Clear form fields
+            document.getElementById("name").value = "";
+            document.getElementById("dob").value = "";
+            document.getElementById("joiningDate").value = "";
+            document.getElementById("defaultPassword").value = "";
+
+            // Optionally, you can display a success message or redirect to another page
+            alert("Underwriter registered successfully!");
+        });
+
+        function generateUnderwriterId() {
+            // Generate a unique ID (for demonstration purposes, you can use a better approach in a real application)
+            return Math.floor(Math.random() * 1000000);
+        }
+
+        function goBack() {
+            // Navigate back to the previous page
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>

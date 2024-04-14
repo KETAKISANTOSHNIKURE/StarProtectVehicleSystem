@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Underwriter Dashboard</title>
+    <style>
+        /* Styles for the form and container */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>New Vehicle Insurance Policy</h2>
+        <form id="new-policy-form">
+            <div class="form-group">
+                <label for="vehicleNo">Vehicle No:</label>
+                <input type="text" id="vehicleNo" name="vehicleNo" maxlength="10" required>
+            </div>
+            <div class="form-group">
+                <label for="vehicleType">Vehicle Type:</label>
+                <select id="vehicleType" name="vehicleType" required>
+                    <option value="2-wheeler">2-wheeler</option>
+                    <option value="4-wheeler">4-wheeler</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="customerName">Customer Name:</label>
+                <input type="text" id="customerName" name="customerName" maxlength="50" required>
+            </div>
+            <div class="form-group">
+                <label for="engineNo">Engine No:</label>
+                <input type="text" id="engineNo" name="engineNo" required>
+            </div>
+            <div class="form-group">
+                <label for="chassisNo">Chassis No:</label>
+                <input type="text" id="chassisNo" name="chassisNo" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNo">Phone No:</label>
+                <input type="tel" id="phoneNo" name="phoneNo" pattern="\d{10}" maxlength="10" required>
+            </div>
+            <div class="form-group">
+                <label for="premiumAmnt">Premium Amount:</label>
+                <input type="number" id="premiumAmnt" name="premiumAmnt" required>
+            </div>
+            <div class="form-group">
+                <label for="type">Insurance Type:</label>
+                <select id="type" name="type" required>
+                    <option value="Full Insurance">Full Insurance</option>
+                    <option value="Third Party">Third Party</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fromDate">From Date:</label>
+                <input type="date" id="fromDate" name="fromDate" required>
+            </div>
+            <div class="form-group">
+                <label for="toDate">To Date:</label>
+                <input type="date" id="toDate" name="toDate" required>
+            </div>
+            <div class="form-group">
+                <label for="underwriterId">Underwriter ID:</label>
+                <input type="text" id="underwriterId" name="underwriterId" required>
+            </div>
+            <button type="submit">Create Policy</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("new-policy-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Get the form data
+            const formData = new FormData(event.target);
+
+            // Convert the form data to a JSON object
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Send the data to the server using the fetch API
+            fetch('/create-policy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error in creating policy');
+                }
+                return response.json();
+            })
+            .then(result => {
+                // Handle the result of the policy creation
+                alert('Policy created successfully!');
+                // Optionally, you can update the UI or redirect the user
+            })
+            .catch(error => {
+                // Handle any errors during policy creation
+                console.error('Error creating policy:', error);
+                alert('Error creating policy. Please try again.');
+            });
+        });
+    </script>
+</body>
+
+</html>

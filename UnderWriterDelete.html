@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Underwriter By Id</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Header styles */
+        h2 {
+            margin-bottom: 25px;
+            color: #2a75e8;
+            font-weight: 600;
+        }
+
+        /* Label styles */
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        /* Input styles */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #2a75e8;
+        }
+
+        /* Button styles */
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        button.primary {
+            background-color: #2a75e8;
+            color: white;
+        }
+
+        button.primary:hover {
+            background-color: #205db4;
+        }
+
+        button.primary:active {
+            background-color: #1c4c93;
+        }
+
+        button:hover {
+            background-color: #cdd6de;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            background-color: #b0c2cc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Delete Underwriter By Id</h2>
+        <label for="underwriterId">Enter Underwriter ID:</label>
+        <input type="text" id="underwriterId">
+        <button class="primary" onclick="confirmDelete()">Delete Underwriter</button>
+        <button onclick="goBack()">Go Back</button>
+
+        <script>
+            function confirmDelete() {
+                let underwriterId = document.getElementById("underwriterId").value;
+
+                if (!isValidUnderwriterId(underwriterId)) {
+                    handleInvalidId();
+                    return;
+                }
+
+                let confirmed = confirm("Are you sure you want to delete this underwriter?");
+                if (confirmed) {
+                    deleteUnderwriter(underwriterId);
+                }
+            }
+
+            function deleteUnderwriter(underwriterId) {
+                // Retrieve underwriters from local storage
+                let underwriters = JSON.parse(localStorage.getItem('underwriters'));
+
+                // Find the index of the underwriter with the given ID
+                let index = underwriters.findIndex(u => u.underwriterId == underwriterId);
+
+                if (index === -1) {
+                    alert("Underwriter not found");
+                    return;
+                }
+
+                // Delete the underwriter from the array
+                underwriters.splice(index, 1);
+
+                // Save the updated underwriters array back to local storage
+                localStorage.setItem('underwriters', JSON.stringify(underwriters));
+
+                alert("Underwriter deleted successfully!");
+            }
+
+            function isValidUnderwriterId(underwriterId) {
+                // Dummy validation (replace with your actual validation logic)
+                return !isNaN(underwriterId);
+            }
+
+            function handleInvalidId() {
+                let choice = prompt("Invalid Underwriter ID.\n1. Re-Enter Underwriter ID\n2. Go Back to the previous Screen");
+                if (choice === "1") {
+                    // Allow the user to re-enter the Underwriter ID
+                    document.getElementById("underwriterId").value = "";
+                } else if (choice === "2") {
+                    // Go back to the previous screen
+                    goBack();
+                } else {
+                    alert("Invalid choice");
+                }
+            }
+
+            function goBack() {
+                // Navigate back to the previous screen
+                window.history.back();
+            }
+        </script>
+    </div>
+</body>
+
+</html>

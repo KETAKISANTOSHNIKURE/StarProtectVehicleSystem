@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search UnderWriter By Id</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Header styles */
+        h2 {
+            margin-bottom: 25px;
+            color: #2a75e8;
+            font-weight: 600;
+        }
+
+        /* Label styles */
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        /* Input styles */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #2a75e8;
+        }
+
+        /* Button styles */
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        button.primary {
+            background-color: #2a75e8;
+            color: white;
+        }
+
+        button.primary:hover {
+            background-color: #205db4;
+        }
+
+        button.primary:active {
+            background-color: #1c4c93;
+        }
+
+        button:hover {
+            background-color: #cdd6de;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            background-color: #b0c2cc;
+        }
+
+        /* Table styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2a75e8;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Search Underwriter By Id</h2>
+        <label for="underwriterId">Enter Underwriter ID:</label>
+        <input type="text" id="underwriterId">
+        <button class="primary" onclick="searchUnderwriter()">Search</button>
+        <button onclick="viewAllUnderwriters()">Show All Underwriters</button>
+        <button type="button" onclick="goBack()">Back</button>
+
+        <table id="underwriterTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Underwriter Id</th>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Joining Date</th>
+                    <th>Default Password</th>
+                </tr>
+            </thead>
+            <tbody id="underwriterTableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function searchUnderwriter() {
+            let underwriterId = document.getElementById("underwriterId").value;
+            if (!isValidUnderwriterId(underwriterId)) {
+                alert("Invalid Underwriter ID");
+                return;
+            }
+
+            // Retrieve underwriter details from local session
+            let underwriters = JSON.parse(localStorage.getItem('underwriters'));
+
+            // Search for the underwriter by ID in the array
+            let underwriter = underwriters.find(u => u.underwriterId == underwriterId);
+
+            if (!underwriter) {
+                alert("Underwriter not found");
+                return;
+            }
+
+            displayUnderwriter(underwriter);
+        }
+
+        function isValidUnderwriterId(underwriterId) {
+            // Dummy validation (replace with your actual validation logic)
+            return !isNaN(underwriterId);
+        }
+
+        let underwriters = JSON.parse(localStorage.getItem('underwriters'));
+
+        function viewAllUnderwriters() {
+            document.getElementById("underwriterTable").style.display = "block";
+            let tableBody = document.getElementById("underwriterTableBody");
+            tableBody.innerHTML = "";
+
+            // Loop through each underwriter and add a row to the table
+            underwriters.forEach(underwriter => {
+                let row = `
+                    <tr>
+                        <td>${underwriter.underwriterId}</td>
+                        <td>${underwriter.name}</td>
+                        <td>${underwriter.dob}</td>
+                        <td>${underwriter.joiningDate}</td>
+                        <td>${underwriter.defaultPassword}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function displayUnderwriter(underwriter) {
+            document.getElementById("underwriterTable").style.display = "block";
+            let tableBody = document.getElementById("underwriterTableBody");
+            tableBody.innerHTML = `
+                <tr>
+                    <td>${underwriter.underwriterId}</td>
+                    <td>${underwriter.name}</td>
+                    <td>${underwriter.dob}</td>
+                    <td>${underwriter.joiningDate}</td>
+                    <td>${underwriter.defaultPassword}</td>
+                </tr>
+            `;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>
